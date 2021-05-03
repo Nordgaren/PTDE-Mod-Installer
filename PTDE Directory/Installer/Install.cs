@@ -18,7 +18,7 @@ namespace PTDE_Installer.Installer
 
         public void InstallMod()
         {
-            ptdeInstall = InstallerForm.passInstallPath; // .Replace(@"\DATA\DARKSOULS.exe", ""); - add this after passInstallPath if using File browser instead of folder browser
+            ptdeInstall = InstallerForm.passInstallPath.Replace(@"\DATA\DARKSOULS.exe", ""); // remove .Replace(@"\DATA\DARKSOULS.exe", ""); -  if using folder browser instead of file browser
             bool fileExists = File.Exists(ptdeInstall + @"\DATA\DARKSOULS.exe");
 
             if (fileExists)
@@ -31,15 +31,15 @@ namespace PTDE_Installer.Installer
                     MessageBox.Show(@"You have unpacked mod files to your Dark Souls install directory
 Please remove installer and mod files from PTDE install folder, 
 unpack mod files and installer to unique folder and run installer from there", "WARNING", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    OnProgressUpdate(progress,"Error: Installer unpacked to Dark Souls directory");
+                    OnProgressUpdate(progress, "Error: Installer unpacked to Dark Souls directory");
 
                 }
-                else if(CheckForNoMod()) //Make sure user isn't trying to run EXE on dry folder.
+                else if (CheckForNoMod()) //Make sure user isn't trying to run EXE on dry folder.
                 {
                     MessageBox.Show(@"There are no mod files in the location of this EXE", "WARNING", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     OnProgressUpdate(progress, "No mod files found in EXE location");
                 }
-                else if(CheckForUDSFM())
+                else if (CheckForUDSFM()) //Check that UDSFM is in the directory with the exe
                 {
                     MessageBox.Show(@"UnpackDarkSoulsForModding.exe must start in the same directory as this EXE", "WARNING", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     OnProgressUpdate(progress, "UnpackDarkSoulsForModding Missing from mod files");
@@ -49,7 +49,7 @@ unpack mod files and installer to unique folder and run installer from there", "
                     progress++;
                     OnProgressUpdate(progress, "Updating");
                     ModUpdate();
-                    OnProgressUpdate(4,"Updating complete");
+                    OnProgressUpdate(4, "Updating complete");
                     MessageBox.Show("Mod Update Complete", "Success!");
 
                 }
@@ -58,12 +58,13 @@ unpack mod files and installer to unique folder and run installer from there", "
                     UnpackDarkSouls();
                     InitialInstall();
                 }
-                }
-                else
-                {
-                    OnProgressUpdate(progress,"Incorrect Folder Selected");
-                    MessageBox.Show("Please Select Dark Souls: Prepare To Die Edition Install Folder (Not the DATA folder!)", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+            }
+            else
+            {
+                OnProgressUpdate(progress, "Incorrect Folder Selected");
+                MessageBox.Show("Please Select Dark Souls: Prepare To Die Edition Install Folder (Not the DATA folder!)", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
         }
 
         private void CheckForLog()
@@ -142,8 +143,8 @@ unpack mod files and installer to unique folder and run installer from there", "
             string pattern = "exit code 0";
             string unpackLog = System.IO.File.ReadAllText(ptdeInstall + @"\DATA\unpackDS-latestlog.txt");
 
-            
-            OnProgressUpdate(progress,"Checking Log");
+
+            OnProgressUpdate(progress, "Checking Log");
             Match match = Regex.Match(unpackLog, pattern);
             if (match.Success)
             {
@@ -164,8 +165,8 @@ unpack mod files and installer to unique folder and run installer from there", "
 
             if (!udsfmExists)
             {
-                
-                OnProgressUpdate(progress,"Copying UDSFM");
+
+                OnProgressUpdate(progress, "Copying UDSFM");
                 File.Copy(sourceUDSFM, destinationUDSFM);
             }
 
@@ -180,7 +181,7 @@ unpack mod files and installer to unique folder and run installer from there", "
 
             process.Start();
             progress++;
-            OnProgressUpdate(progress,"Unpacking Dark Souls");
+            OnProgressUpdate(progress, "Unpacking Dark Souls");
             process.WaitForExit();
         }
 
@@ -202,6 +203,16 @@ unpack mod files and installer to unique folder and run installer from there", "
             }
         }
 
+        private void ModUpdate()
+        {
+            var sourceDirectoryInfo = new DirectoryInfo(Path.Combine(currentDirectory, "DATA"));
+            var targetDirectoryInfo = new DirectoryInfo(Path.Combine(ptdeInstall + @"\DATA"));
+
+            BackupSettings();
+            CopyFiles(sourceDirectoryInfo, targetDirectoryInfo);
+            RestoreSettings();
+        }
+
         private void CopyFiles(DirectoryInfo source, DirectoryInfo target)
         {
             Directory.CreateDirectory(target.FullName);
@@ -210,7 +221,6 @@ unpack mod files and installer to unique folder and run installer from there", "
             {
                 file.CopyTo(Path.Combine(target.FullName, file.Name), true);
                 OnProgressUpdate(progress, @"Copying:" + file.Name);
-
             }
 
             foreach (var sourceSubdirectory in source.GetDirectories())
@@ -218,18 +228,7 @@ unpack mod files and installer to unique folder and run installer from there", "
                 var targetSubdirectory = target.CreateSubdirectory(sourceSubdirectory.Name);
                 CopyFiles(sourceSubdirectory, targetSubdirectory);
                 OnProgressUpdate(progress, @"Copying:" + sourceSubdirectory.Name);
-
             }
-        }
-
-        private void ModUpdate()
-        {
-            var sourceDirectoryInfo = new DirectoryInfo(Path.Combine(Environment.CurrentDirectory, "Data"));
-            var targetDirectoryInfo = new DirectoryInfo(Path.Combine(ptdeInstall + @"\DATA"));
-
-            BackupSettings();
-            CopyFiles(sourceDirectoryInfo, targetDirectoryInfo);
-            RestoreSettings();
         }
 
         private void BackupSettings()
@@ -306,8 +305,8 @@ unpack mod files and installer to unique folder and run installer from there", "
             {
                 if (!dscmInstalled)
                 {
-                    
-                    OnProgressUpdate(progress,"Installing DSCM");
+
+                    OnProgressUpdate(progress, "Installing DSCM");
                     File.Copy(dscmSource, dscmDest, true);
                 }
             }
@@ -318,15 +317,15 @@ unpack mod files and installer to unique folder and run installer from there", "
         public string passBrowsePath;
         public void BrowseFiles()
         {
-            FolderBrowserDialog fbd = new FolderBrowserDialog { };
-            if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                passBrowsePath = fbd.SelectedPath;
-
-            //Replace above code with this for file browser
-            //OpenFileDialog fbd = new OpenFileDialog { };
+            //Replace above code with this for folder browser
+            //FolderBrowserDialog fbd = new FolderBrowserDialog { };
             //if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            //    passBrowsePath = fbd.FileName;
-            // You will also need to add replace functionality up for the ptdeInstall string at the top of InstallMod() method
+            //    passBrowsePath = fbd.SelectedPath;
+            // You will also need to remove replace functionality up for the ptdeInstall string at the top of InstallMod() method
+
+            OpenFileDialog fbd = new OpenFileDialog { };
+            if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                passBrowsePath = fbd.FileName;
         }
 
     }
