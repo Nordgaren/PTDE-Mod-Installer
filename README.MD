@@ -8,4 +8,6 @@
 4) DSCM is option and the installer will do nothing if it isn't in the folder with it.
 
 Made by Nordgaren
+
 This is the first program I've ever written.
+
