@@ -1,30 +1,53 @@
-﻿using PTDE_Installer.Installer;
-using System;
+﻿using System;
 using System.ComponentModel;
+using System.IO;
 using System.Windows.Forms;
+using Unpack_Dark_Souls_For_Modding_CSharp;
 
-namespace InstallerGUI
+namespace PTDE_Installer
 {
     public partial class InstallerForm : Form
     {
-
-        Install runInstall = new Install();
+        private static IProgress<(double value, string status)> Progress;
+        private static string EXEPath;
 
         public InstallerForm()
         {
             InitializeComponent();
-            runInstall.OnProgressUpdate += runInstall_OnProgressUpdate;
+            Progress = new Progress<(double value, string status)>(ProgressReport);
+        }
+
+        private void ProgressReport((double value, string status) obj)
+        {
+            double percent = obj.value * 100;
+            progressBar.Value = (int)percent;
+            progressUpdate.Text = obj.status;
         }
 
         private void browse_Click(object sender, EventArgs e)
         {
-            runInstall.BrowseFiles();
-            installPathBox.Text = runInstall.passBrowsePath; //Get's browse path from Install class. 
+            OpenFileDialog fbd = new OpenFileDialog { };
+            if (fbd.ShowDialog() == DialogResult.OK)
+            installPathBox.Text = fbd.FileName; //Get's browse path from Install class. 
+            
         }
 
         public static string passInstallPath;
         private void install_Click(object sender, EventArgs e)
         {
+            EXEPath = installPathBox.Text;
+            if (!EXEPath.EndsWith("DARKSOULS.exe"))
+                EXEPath += @"\DATA\DARKSOULS.exe";
+
+            bool fileExists = File.Exists(EXEPath);
+
+            if (!fileExists)
+            {
+                Progress.Report((0, "Incorrect Folder Selected"));
+                MessageBox.Show("Please Select DARKSOULS.exe", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             passInstallPath = installPathBox.Text; //passes installPathBox to Install class. Needed for copy paste functionality.
             if (!backgroundWorker.IsBusy)
             {
@@ -32,30 +55,31 @@ namespace InstallerGUI
             }
         }
 
-        private void installer_Load(object sender, EventArgs e)
-        {
-            this.Text = "Install PTDE Mod"; //Form title top left
-
-        }
-
         private void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            runInstall.InstallMod();
-        }
 
-        private void backgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            progressBar.Value = e.ProgressPercentage;
-            progressUpdate.Text = (string)e.UserState;
-        }
-        private void runInstall_OnProgressUpdate(int step , string value)
-        {
-            backgroundWorker.ReportProgress(step , value);
+            var error = Unpacker.Unpack(EXEPath, Progress);
+
+            if (error != null)
+            {
+                if (error != "Dark Souls is already unpacked!")
+                    ShowError(error);
+            }
+
+            error = Install.InstallMod(EXEPath, Progress);
+
+            if (error != null)
+                ShowError(error);
         }
 
         private void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            progressBar.Value = 0;
+            progressBar.Value = 100;
+        }
+
+        private static void ShowError(string error)
+        {
+            MessageBox.Show(error, "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
         private void InstallerForm_FormClosing_1(object sender, FormClosingEventArgs e)
@@ -72,11 +96,6 @@ namespace InstallerGUI
                     e.Cancel = true;
                 }
             }
-        }
-
-        private void instructions_Click(object sender, EventArgs e)
-        {
-
         }
     }
 

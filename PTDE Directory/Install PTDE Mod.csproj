@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{C04E44E5-6056-416F-B160-67647D9F3675}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>InstallerGUI</RootNamespace>
+    <RootNamespace>PTDE_Installer</RootNamespace>
     <AssemblyName>Install PTDE Mod</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -58,7 +58,7 @@
     <Compile Include="Install PTDE Mod.Designer.cs">
       <DependentUpon>Install PTDE Mod.cs</DependentUpon>
     </Compile>
-    <Compile Include="Installer\Install.cs" />
+    <Compile Include="Install.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Install PTDE Mod.resx">
@@ -89,7 +89,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Bonfire.ico" />
-    <Content Include="Inferno Icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Unpack Dark Souls For Modding CSharp\Unpack Dark Souls For Modding CSharp\Unpack Dark Souls For Modding CSharp.csproj">
+      <Project>{ff498eb9-f15a-4483-a599-c2623852d599}</Project>
+      <Name>Unpack Dark Souls For Modding CSharp</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

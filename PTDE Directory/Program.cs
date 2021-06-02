@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace InstallerGUI
+namespace PTDE_Installer
 {
     static class Program
     {

@@ -1,5 +1,5 @@
 ﻿
-namespace InstallerGUI
+namespace PTDE_Installer
 {
     partial class InstallerForm
     {
@@ -65,12 +65,12 @@ namespace InstallerGUI
             // 
             this.instructions.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.instructions.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.instructions.Location = new System.Drawing.Point(21, 365);
+            this.instructions.Location = new System.Drawing.Point(21, 360);
             this.instructions.Name = "instructions";
             this.instructions.Size = new System.Drawing.Size(620, 137);
             this.instructions.TabIndex = 2;
-            this.instructions.Text = "Please select the Dark Souls: Prepare To Die Edition folder you wish to install R" +
-    "emastest to.";
+            this.instructions.Text = "Please select the Dark Souls: Prepare To Die Edition EXE you wish to install this" +
+    " mod to.";
             this.instructions.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // icon
@@ -88,7 +88,6 @@ namespace InstallerGUI
             // progressBar
             // 
             this.progressBar.Location = new System.Drawing.Point(28, 525);
-            this.progressBar.Maximum = 4;
             this.progressBar.Name = "progressBar";
             this.progressBar.Size = new System.Drawing.Size(510, 5);
             this.progressBar.TabIndex = 6;
@@ -143,7 +142,6 @@ namespace InstallerGUI
             // 
             this.backgroundWorker.WorkerReportsProgress = true;
             this.backgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker_DoWork);
-            this.backgroundWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker_ProgressChanged);
             this.backgroundWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker_RunWorkerCompleted);
             // 
             // InstallerForm
@@ -165,9 +163,8 @@ namespace InstallerGUI
             this.MinimumSize = new System.Drawing.Size(690, 704);
             this.Name = "InstallerForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "InstallerForm";
+            this.Text = "Install PTDE Mod";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.InstallerForm_FormClosing_1);
-            this.Load += new System.EventHandler(this.installer_Load);
             ((System.ComponentModel.ISupportInitialize)(this.icon)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
