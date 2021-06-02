@@ -1,23 +1,15 @@
-C:\Users\Tor\source\repos\PTDE Mod Installer\PTDE Directory\bin\Release\Install PTDE Mod.exe.config
-C:\Users\Tor\source\repos\PTDE Mod Installer\PTDE Directory\bin\Release\Install PTDE Mod.exe
-C:\Users\Tor\source\repos\PTDE Mod Installer\PTDE Directory\bin\Release\Install PTDE Mod.pdb
-C:\Users\Tor\source\repos\PTDE Mod Installer\PTDE Directory\obj\Release\InstallerGUI.InstallerForm.resources
-C:\Users\Tor\source\repos\PTDE Mod Installer\PTDE Directory\obj\Release\InstallerGUI.Properties.Resources.resources
-C:\Users\Tor\source\repos\PTDE Mod Installer\PTDE Directory\obj\Release\Install PTDE Mod.csproj.GenerateResource.cache
-C:\Users\Tor\source\repos\PTDE Mod Installer\PTDE Directory\obj\Release\Install PTDE Mod.csproj.CoreCompileInputs.cache
-C:\Users\Tor\source\repos\PTDE Mod Installer\PTDE Directory\obj\Release\Install PTDE Mod.exe
-C:\Users\Tor\source\repos\PTDE Mod Installer\PTDE Directory\obj\Release\Install PTDE Mod.pdb
 C:\Users\Tor\source\repos\PTDE-Mod-Installer\PTDE Directory\bin\Release\Install PTDE Mod.exe.config
 C:\Users\Tor\source\repos\PTDE-Mod-Installer\PTDE Directory\bin\Release\Install PTDE Mod.exe
 C:\Users\Tor\source\repos\PTDE-Mod-Installer\PTDE Directory\bin\Release\Install PTDE Mod.pdb
+C:\Users\Tor\source\repos\PTDE-Mod-Installer\PTDE Directory\bin\Release\System.Diagnostics.DiagnosticSource.dll
+C:\Users\Tor\source\repos\PTDE-Mod-Installer\PTDE Directory\bin\Release\SoulsFormats.xml
+C:\Users\Tor\source\repos\PTDE-Mod-Installer\PTDE Directory\bin\Release\System.Diagnostics.DiagnosticSource.xml
 C:\Users\Tor\source\repos\PTDE-Mod-Installer\PTDE Directory\obj\Release\Install PTDE Mod.csprojAssemblyReference.cache
+C:\Users\Tor\source\repos\PTDE-Mod-Installer\PTDE Directory\obj\Release\PTDE_Installer.InstallerForm.resources
+C:\Users\Tor\source\repos\PTDE-Mod-Installer\PTDE Directory\obj\Release\PTDE_Installer.Properties.Resources.resources
 C:\Users\Tor\source\repos\PTDE-Mod-Installer\PTDE Directory\obj\Release\Install PTDE Mod.csproj.GenerateResource.cache
 C:\Users\Tor\source\repos\PTDE-Mod-Installer\PTDE Directory\obj\Release\Install PTDE Mod.csproj.CoreCompileInputs.cache
+C:\Users\Tor\source\repos\PTDE-Mod-Installer\PTDE Directory\obj\Release\Install PTDE Mod.csproj.CopyComplete
 C:\Users\Tor\source\repos\PTDE-Mod-Installer\PTDE Directory\obj\Release\Install PTDE Mod.exe
 C:\Users\Tor\source\repos\PTDE-Mod-Installer\PTDE Directory\obj\Release\Install PTDE Mod.pdb
-C:\Users\Tor\source\repos\PTDE-Mod-Installer\PTDE Directory\obj\Release\PTDE_Installer.InstallerForm.resources
-C:\Users\Tor\source\repos\PTDE-Mod-Installer\PTDE Directory\bin\Release\Unpack Dark Souls For Modding CSharp.exe
-C:\Users\Tor\source\repos\PTDE-Mod-Installer\PTDE Directory\bin\Release\Unpack Dark Souls For Modding CSharp.pdb
-C:\Users\Tor\source\repos\PTDE-Mod-Installer\PTDE Directory\bin\Release\Unpack Dark Souls For Modding CSharp.exe.config
-C:\Users\Tor\source\repos\PTDE-Mod-Installer\PTDE Directory\obj\Release\PTDE_Installer.Properties.Resources.resources
-C:\Users\Tor\source\repos\PTDE-Mod-Installer\PTDE Directory\obj\Release\Install PTDE Mod.csproj.CopyComplete
+C:\Users\Tor\source\repos\PTDE-Mod-Installer\PTDE Directory\obj\Release\Install PTDE Mod.csproj.Fody.CopyLocal.cache

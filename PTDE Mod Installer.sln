@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31129.286
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Install PTDE Mod", "PTDE Directory\Install PTDE Mod.csproj", "{C04E44E5-6056-416F-B160-67647D9F3675}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unpack Dark Souls For Modding CSharp", "..\Unpack Dark Souls For Modding CSharp\Unpack Dark Souls For Modding CSharp\Unpack Dark Souls For Modding CSharp.csproj", "{FF498EB9-F15A-4483-A599-C2623852D599}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoulsFormats", "..\SoulsFormats\SoulsFormats\SoulsFormats.csproj", "{E359BBFA-3678-4566-B53C-E064D142E0D3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{C04E44E5-6056-416F-B160-67647D9F3675}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C04E44E5-6056-416F-B160-67647D9F3675}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C04E44E5-6056-416F-B160-67647D9F3675}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FF498EB9-F15A-4483-A599-C2623852D599}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FF498EB9-F15A-4483-A599-C2623852D599}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FF498EB9-F15A-4483-A599-C2623852D599}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FF498EB9-F15A-4483-A599-C2623852D599}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E359BBFA-3678-4566-B53C-E064D142E0D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E359BBFA-3678-4566-B53C-E064D142E0D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E359BBFA-3678-4566-B53C-E064D142E0D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E359BBFA-3678-4566-B53C-E064D142E0D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
