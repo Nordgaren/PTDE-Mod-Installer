@@ -243,22 +243,23 @@ unpack mod files and installer to unique folder and run installer from there", "
             if (File.Exists(iniDSFix))
             {
                 OnProgressUpdate(progress, @"Backing up DSFix.ini");
-                File.Delete(iniDSFix + @".bak");
-                File.Move(iniDSFix, Path.ChangeExtension(iniDSFix, "ini.bak"));
+                if(!File.Exists(iniDSFix + @".bak"))
+                    File.Move(iniDSFix, Path.ChangeExtension(iniDSFix, "ini.bak"));
+
             }
 
             if (File.Exists(iniDSFixKeys))
             {
                 OnProgressUpdate(progress, @"Backing up DSFixKeys.ini");
-                File.Delete(iniDSFixKeys + @".bak");
-                File.Move(iniDSFixKeys, Path.ChangeExtension(iniDSFixKeys, "ini.bak"));
+                if (!File.Exists(iniDSFixKeys + @".bak"))
+                    File.Move(iniDSFixKeys, Path.ChangeExtension(iniDSFixKeys, "ini.bak"));
             }
 
             if (File.Exists(inid3d9_Mod))
             {
                 OnProgressUpdate(progress, @"Backing up inid3d9_Mod.ini");
-                File.Delete(inid3d9_Mod + @".bak");
-                File.Move(inid3d9_Mod, Path.ChangeExtension(inid3d9_Mod, "ini.bak"));
+                if (!File.Exists(inid3d9_Mod + @".bak"))
+                    File.Move(inid3d9_Mod, Path.ChangeExtension(inid3d9_Mod, "ini.bak"));
             }
         }
 
