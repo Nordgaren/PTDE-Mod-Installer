@@ -21,7 +21,9 @@ Dependencies packaged into EXE by [Costrua.Fody](https://www.nuget.org/packages/
 **[thefifthmatt](https://github.com/thefifthmatt)** for suggesting how to make the unapacker faster.  
 
 ### Patch Notes  
-## V 2.
+## v 2.1
+* added log
+## V 2
 * Added built in unpacker to installer.
 ## V 1
 * Basic file mover.
