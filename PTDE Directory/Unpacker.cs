@@ -14,10 +14,16 @@ namespace Unpack_Dark_Souls_For_Modding_CSharp
     public class Unpacker
     {
         private const int WRITE_LIMIT = 1024 * 1024 * 100;
+        private static string LogFile;
 
         public static string Unpack(string exePath, IProgress<(double, string)> progress)
         {
             string gameDir = Path.GetDirectoryName(exePath);
+
+            LogFile = $@"{gameDir}\UnpackLog.txt";
+
+            if (File.Exists(LogFile))
+                File.Delete(LogFile);
 
             GameInfo gameInfo = GameInfo.GetGameInfo();
 
@@ -28,12 +34,12 @@ namespace Unpack_Dark_Souls_For_Modding_CSharp
             bool patched = CheckEXE(exePath);
 
             if (unpacked && patched)
-                return "Dark Souls is already unpacked!";
+                return Logger.Log("Dark Souls is already unpacked!", LogFile);
 
             progress.Report((0, "Preparing to unpack..."));
             if (driveInfo.AvailableFreeSpace < gameInfo.RequiredGB * 1024 * 1024 * 1024)
             {
-                return $"You are out of Disk space. You need at least {gameInfo.RequiredGB}GB. Please free up some space and try to unpack, again.";
+                return Logger.Log($"You are out of Disk space. You need at least {gameInfo.RequiredGB}GB. Please free up some space and try to unpack, again.", LogFile);
             }
 
             Restore(exePath, progress);
@@ -43,20 +49,20 @@ namespace Unpack_Dark_Souls_For_Modding_CSharp
             if (!archivesExist)
             {
                 if (patched)
-                    return "EXE already patched!";
+                    return Logger.Log("EXE already patched!", LogFile);
 
                 ExePatcher.Patch(exePath, progress);
-                return "EXE successfully patched";
+                return Logger.Log("EXE successfully patched", LogFile);
             }
 
             try
             {
-                progress.Report((0, "Attempting to backup..."));
+                progress.Report((0, Logger.Log("Attempting to backup...", LogFile)));
                 BackupDirs(gameDir, gameInfo, progress);
             }
             catch (Exception ex)
             {
-                return $"Failed to back up directories.\r\n\r\n{ex}";
+                return Logger.Log($"Failed to back up directories.\r\n\r\n{ex}", LogFile);
             }
 
             for (int i = 0; i < gameInfo.Archives.Count; i++)
@@ -65,25 +71,28 @@ namespace Unpack_Dark_Souls_For_Modding_CSharp
                 string error = UnpackArchive(gameDir, archive, i,
                     gameInfo.Archives.Count, BHD5.Game.DarkSouls1, gameInfo.Dictionary, progress).Result;
                 if (error != null)
-                    return error;
+                    return Logger.Log(error, LogFile);
             }
 
+            progress.Report((0, Logger.Log(@"Grabbing missing", LogFile)));
             GetBHD(gameDir, progress);
 
-            progress.Report((0, "Creating c4110 file"));
+            progress.Report((0, Logger.Log("Creating c4110 file", LogFile)));
             CreateC4110(gameDir);
 
-            progress.Report((0, @"Moving map tpf files"));
+            progress.Report((0, Logger.Log(@"Moving map tpf files", LogFile)));
             MoveTPFs(gameDir);
 
+            progress.Report((0, Logger.Log(@"Extracting bhd/bdt pairs", LogFile)));
             ExtractBHD(gameDir, progress);
 
             //await UnDCX(gameDir);
-            progress.Report((1, "Unpacking complete!"));
+            progress.Report((1, Logger.Log("Unpacking complete!", LogFile)));
 
             if(!patched)
                 ExePatcher.Patch(exePath, progress);
 
+            progress.Report((1, Logger.Log("Cleaning Archives", LogFile)));
             CleanupArchives(exePath);
 
             return null;
@@ -161,7 +170,8 @@ namespace Unpack_Dark_Souls_For_Modding_CSharp
         private static async Task<string> UnpackArchive(string gameDir, string archive, int index, int total,
             BHD5.Game gameVersion, ArchiveDictionary archiveDictionary, IProgress<(double, string)> progress)
         {
-            progress.Report(((index + 2.0) / (total + 2.0), $"Loading {archive}..."));
+            progress.Report(((index + 2.0) / (total + 2.0), Logger.Log($"Loading {archive}...", LogFile)));
+            
             string bhdPath = $@"{gameDir}\{archive}.bhd";
             string bdtPath = $@"{gameDir}\{archive}.bdt";
 
@@ -181,7 +191,7 @@ namespace Unpack_Dark_Souls_For_Modding_CSharp
                 }
                 catch (OverflowException ex)
                 {
-                    return $"Failed to open BHD:\n{bhdPath}\n\n{ex}";
+                    return Logger.Log($"Failed to open BHD:\n{bhdPath}\n\n{ex}", LogFile);
                 }
 
                 int fileCount = bhd.Buckets.Sum(b => b.Count);
@@ -211,7 +221,7 @@ namespace Unpack_Dark_Souls_For_Modding_CSharp
                                 }
                                 else
                                 {
-                                    return($"Failed to read file in:\r\n{archive}\r\n\r\n");
+                                    return Logger.Log($"Failed to read file in:\r\n{archive}\r\n\r\n", LogFile);
                                 }
 
                                 progress.Report(((index + 2.0 + currentFile / (double)fileCount) / (total + 2.0),
@@ -245,7 +255,7 @@ namespace Unpack_Dark_Souls_For_Modding_CSharp
                                 }
                                 catch (Exception ex)
                                 {
-                                    return $"Failed to read file:\r\n{path}\r\n\r\n{ex}";
+                                    return Logger.Log($"Failed to read file:\r\n{path}\r\n\r\n{ex}", LogFile);
                                 }
 
                                 try
@@ -256,7 +266,7 @@ namespace Unpack_Dark_Souls_For_Modding_CSharp
                                 }
                                 catch (Exception ex)
                                 {
-                                    return $"Failed to write file:\r\n{path}\r\n\r\n{ex}";
+                                    return Logger.Log($"Failed to write file:\r\n{path}\r\n\r\n{ex}", LogFile);
                                 }
                             }
                         }
@@ -267,10 +277,9 @@ namespace Unpack_Dark_Souls_For_Modding_CSharp
                 }
                 catch (Exception ex)
                 {
-                    return $"Failed to unpack BDT:\r\n{bdtPath}\r\n\r\n{ex}";
+                    return Logger.Log($"Failed to unpack BDT:\r\n{bdtPath}\r\n\r\n{ex}", LogFile);
                 }
             }
-
             return null;
         }
 
@@ -389,14 +398,14 @@ namespace Unpack_Dark_Souls_For_Modding_CSharp
 
             if (File.Exists(gameDir + "\\unpackDS-backup\\" + exeName))
             {
-                progress.Report((0, "Restoring executable..."));
+                progress.Report((0, Logger.Log("Restoring executable...", LogFile)));
                 try
                 {
                     File.Copy(gameDir + "\\unpackDS-backup\\" + exeName, exePath, true);
                 }
                 catch (Exception ex)
                 {
-                    return $"Failed to restore executable.\r\n\r\n{ex}";
+                    return Logger.Log($"Failed to restore executable.\r\n\r\n{ex}", LogFile);
                 }
             }
 
@@ -411,14 +420,14 @@ namespace Unpack_Dark_Souls_For_Modding_CSharp
 
                 if (File.Exists(restoreSource) && !File.Exists(restoreTarget))
                 {
-                    progress.Report(((i + 1.0) / totalSteps, $"Restoring file \"{restore}\" ({i + 1}/{gameInfo.BackupDirs.Count})..."));
+                    progress.Report(((i + 1.0) / totalSteps, Logger.Log($"Restoring file \"{restore}\" ({i + 1}/{gameInfo.BackupDirs.Count})...", LogFile)));
                     try
                     {
                         File.Copy(restoreSource, restoreTarget, true);
                     }
                     catch (Exception ex)
                     {
-                        return $"Failed to restore sounds.\r\n\r\n{ex}";
+                        return Logger.Log($"Failed to restore files.\r\n\r\n{ex}", LogFile);
                     }
                 }
             }
@@ -432,7 +441,7 @@ namespace Unpack_Dark_Souls_For_Modding_CSharp
 
                     if (Directory.Exists(gameDir + "\\" + dir))
                     {
-                        progress.Report(((i + 1.0 + gameInfo.BackupDirs.Count) / totalSteps, $"Deleting directory \"{dir}\" ({i + 1}/{gameInfo.DeleteDirs.Count})..."));
+                        progress.Report(((i + 1.0 + gameInfo.BackupDirs.Count) / totalSteps, Logger.Log($"Deleting directory \"{dir}\" ({i + 1}/{gameInfo.DeleteDirs.Count})...", LogFile)));
 
                         Directory.Delete(gameDir + "\\" + dir, true);
                     }
@@ -440,7 +449,7 @@ namespace Unpack_Dark_Souls_For_Modding_CSharp
             }
             catch (Exception ex)
             {
-                return $"Failed to delete directory.\r\n\r\n{ex}";
+                return Logger.Log($"Failed to delete directory.\r\n\r\n{ex}", LogFile);
             }
 
             return null;

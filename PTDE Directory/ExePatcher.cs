@@ -8,12 +8,15 @@ namespace Unpack_Dark_Souls_For_Modding_CSharp
     class ExePatcher
     {
         private static readonly Encoding UTF16 = Encoding.Unicode;
+        private static string LogFile;
 
         public static string Patch(string exePath, IProgress<(double, string)> progress)
         {
-            progress.Report((0, "Preparing to patch..."));
             string gameDir = Path.GetDirectoryName(exePath);
             string exeName = Path.GetFileName(exePath);
+            LogFile = $@"{gameDir}\UnpackLog.txt";
+            progress.Report((0, Logger.Log("Preparing to patch...", LogFile)));
+            
 
             GameInfo gameInfo = GameInfo.GetGameInfo();
             
@@ -27,7 +30,7 @@ namespace Unpack_Dark_Souls_For_Modding_CSharp
                 }
                 catch (Exception ex)
                 {
-                    return $"Failed to backup file:\r\n{exePath}\r\n\r\n{ex}";
+                    return Logger.Log($"Failed to backup file:\r\n{exePath}\r\n\r\n{ex}", LogFile);
                 }
             }
 
@@ -38,7 +41,7 @@ namespace Unpack_Dark_Souls_For_Modding_CSharp
             }
             catch (Exception ex)
             {
-                return $"Failed to read file:\r\n{exePath}\r\n\r\n{ex}";
+                return Logger.Log($"Failed to read file:\r\n{exePath}\r\n\r\n{ex}", LogFile);
             }
 
             try
@@ -52,14 +55,14 @@ namespace Unpack_Dark_Souls_For_Modding_CSharp
                     string replacement = gameInfo.Replace[i];
 
                     // Add 1.0 for preparation step
-                    progress.Report(((i + 1.0) / (gameInfo.Replacements.Count + 1.0), $"Patching alias \"{target}\" ({i + 1}/{gameInfo.Replacements.Count})..."));
+                    progress.Report(((i + 1.0) / (gameInfo.Replacements.Count + 1.0), Logger.Log($"Patching alias \"{target}\" ({i + 1}/{gameInfo.Replacements.Count})...", LogFile)));
 
                     replace(bytes, target, replacement);
                 }
             }
             catch (Exception ex)
             {
-                return $"Failed to patch file:\r\n{exePath}\r\n\r\n{ex}";
+                return Logger.Log($"Failed to patch file:\r\n{exePath}\r\n\r\n{ex}", LogFile);
             }
 
             try
@@ -68,10 +71,10 @@ namespace Unpack_Dark_Souls_For_Modding_CSharp
             }
             catch (Exception ex)
             {
-                return $"Failed to write file:\r\n{exePath}\r\n\r\n{ex}";
+                return Logger.Log($"Failed to write file:\r\n{exePath}\r\n\r\n{ex}", LogFile);
             }
 
-            progress.Report((1, "Patching complete!"));
+            progress.Report((1, Logger.Log("Patching complete!", LogFile)));
             return null;
         }
 

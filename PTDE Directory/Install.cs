@@ -37,6 +37,7 @@ namespace PTDE_Installer
                 return null;
             }
 
+            Files = Directory.GetFiles($@"{CurrentDirectory}\DATA", "*", SearchOption.AllDirectories);
             progress.Report((0, "Updating mod"));
             ModUpdate(progress);
 
@@ -97,7 +98,7 @@ namespace PTDE_Installer
         }
 
 
-        private static string[] Files = Directory.GetFiles($@"{CurrentDirectory}\DATA", "*", SearchOption.AllDirectories);
+        private static string[] Files;
 
         private static void CopyFiles(DirectoryInfo source, DirectoryInfo target, IProgress<(double, string)> progress)
         {
