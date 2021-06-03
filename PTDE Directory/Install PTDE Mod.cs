@@ -74,7 +74,6 @@ namespace PTDE_Installer
 
         private void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            progressBar.Value = 100;
         }
 
         private static void ShowError(string error)
