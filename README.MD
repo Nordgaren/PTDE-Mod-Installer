@@ -2,7 +2,7 @@
 Made by Nordgaren  
 This is the first program I've ever written.  
 
-This tool uses a modified version of [UXM](https://github.com/JKAnderson/UXM) and [Yabber](https://github.com/JKAnderson/Yabber).  
+This tool uses a modified version of [UXM](https://github.com/JKAnderson/UXM) and [Yabber](https://github.com/JKAnderson/Yabber) called [Unpack Dark Souls For Modding CSharp](https://github.com/Nordgaren/Unpack-Dark-Souls-For-Modding-CSharp).  
 It will unpack the Dark Souls PTDE folder selected by the user and copy over the data files in the directory the EXE is run from.  
 Installer moves all files in the DATA folder it is next to to the DATA folder selected by the user. Will also look for DSFix.ini DSFixKeys.ini and d3d9_Mod.ini, back them up and put them back after copying files.  
 DSCM is optional and the installer will do nothing if it isn't in the folder with it.  
