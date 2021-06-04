@@ -60,6 +60,7 @@ namespace PTDE_Installer
             this.installPathBox.Size = new System.Drawing.Size(510, 26);
             this.installPathBox.TabIndex = 1;
             this.installPathBox.Text = "Select PTDE Install Folder";
+            this.installPathBox.Click += new System.EventHandler(this.installPathBox_Click);
             // 
             // instructions
             // 

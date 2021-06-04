@@ -109,6 +109,12 @@ namespace PTDE_Installer
                 }
             }
         }
+
+        private void installPathBox_Click(object sender, EventArgs e)
+        {
+            installPathBox.SelectAll();
+            installPathBox.Focus();
+        }
     }
 
 }
