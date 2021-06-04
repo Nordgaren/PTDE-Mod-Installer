@@ -57,19 +57,27 @@ namespace PTDE_Installer
 
         private void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-
-            var error = Unpacker.Unpack(EXEPath, Progress);
-
-            if (error != null)
+            try
             {
-                if (error != "Dark Souls is already unpacked!")
+                var error = Unpacker.Unpack(EXEPath, Progress);
+
+                if (error != null)
+                {
+                    if (error != "Dark Souls is already unpacked!")
+                        ShowError(error);
+                }
+
+                error = Install.InstallMod(EXEPath, Progress);
+
+                if (error != null)
                     ShowError(error);
             }
-
-            error = Install.InstallMod(EXEPath, Progress);
-
-            if (error != null)
-                ShowError(error);
+            catch (UnauthorizedAccessException a)
+            {
+                Progress.Report((0, $"The folder you are trying to unpack requires additional priviledges."));
+                ShowError($"{a.Message}\r\n\r\nThe folder you are trying to unpack requires additional priviledges. \r\n\r\nRun the installer as Admin");
+                return;
+            }
         }
 
         private void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
