@@ -78,6 +78,11 @@ namespace PTDE_Installer
                 ShowError($"{a.Message}\r\n\r\nThe folder you are trying to unpack requires additional priviledges. \r\n\r\nRun the installer as Admin");
                 return;
             }
+            catch (Exception a)
+            {
+                ShowError(a.Message);
+                throw;
+            }
         }
 
         private void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
