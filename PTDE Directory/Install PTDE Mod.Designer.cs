@@ -164,7 +164,7 @@ namespace PTDE_Installer
             this.MinimumSize = new System.Drawing.Size(690, 704);
             this.Name = "InstallerForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Install PTDE Mod";
+            this.Text = "Auto Install Remastest";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.InstallerForm_FormClosing_1);
             ((System.ComponentModel.ISupportInitialize)(this.icon)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
