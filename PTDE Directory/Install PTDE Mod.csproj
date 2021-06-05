@@ -8,7 +8,7 @@
     <ProjectGuid>{C04E44E5-6056-416F-B160-67647D9F3675}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>PTDE_Installer</RootNamespace>
-    <AssemblyName>Auto Install Remastest</AssemblyName>
+    <AssemblyName>PTDE Mod Installer</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
