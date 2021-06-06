@@ -21,6 +21,8 @@ Dependencies packaged into EXE by [Costrua.Fody](https://www.nuget.org/packages/
 **[thefifthmatt](https://github.com/thefifthmatt)** for suggesting how to make the unapacker faster.  
 
 ### Patch Notes  
+## v 2.4
+* Updated UDSFMCSharp for handling single exe files
 ## v 2.3
 * Updated error handling and updated UDSFMCS
 ## v 2.2
