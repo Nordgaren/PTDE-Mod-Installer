@@ -64,13 +64,19 @@ namespace PTDE_Installer
                 if (error != null)
                 {
                     if (error != "Dark Souls is already unpacked!")
+                    {
                         ShowError(error);
+                        return;
+                    }
                 }
 
                 error = Install.InstallMod(EXEPath, Progress);
 
                 if (error != null)
+                {
                     ShowError(error);
+                    return;
+                }
             }
             catch (UnauthorizedAccessException a)
             {
@@ -81,12 +87,8 @@ namespace PTDE_Installer
             catch (Exception a)
             {
                 ShowError(a.Message);
-                throw;
+                return;
             }
-        }
-
-        private void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
         }
 
         private static void ShowError(string error)
